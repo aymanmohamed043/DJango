@@ -1,6 +1,7 @@
 from django.db import models
 
 # Create your models here.
+# store_collection (id, title, featured_product_id)
 class Collection(models.Model):
     title = models.CharField(max_length=255)
     featured_product = models.ForeignKey('Product', on_delete=models.SET_NULL, null=True, related_name='+')
@@ -13,20 +14,21 @@ class Promotion(models.Model):
     def __str__(self):
         return self.description
 
+# (id, title, description, unit_price, inventory, last_update, collection_id, slug)
 class Product(models.Model):
-    name = models.CharField(max_length=255)
+    title = models.CharField(max_length=255)
     description = models.TextField()
-    price = models.DecimalField(max_digits=10, decimal_places=2)
+    unit_price = models.DecimalField(max_digits=10, decimal_places=2)
     inventory = models.IntegerField()
+    last_update = models.DateTimeField(auto_now=True)
     collection = models.ForeignKey(Collection, on_delete=models.CASCADE)
-    created_at = models.DateTimeField(auto_now_add=True)
-    last_updated = models.DateTimeField(auto_now=True)
-    promotion = models.ManyToManyField(Promotion)
+    slug = models.SlugField()
 
     def __str__(self):
-        return self.name
+        return self.title
     
 
+# (id, first_name, last_name, email, phone, birth_date, membership)
 class Customer(models.Model):
     MEMBERSHIP_BRONZE = 'B'
     MEMBERSHIP_SILVER = 'S'
@@ -41,10 +43,8 @@ class Customer(models.Model):
     last_name = models.CharField(max_length=255)
     email = models.EmailField(unique=True)
     phone = models.CharField(max_length=20)
-    birthdate = models.DateField(null=True)
+    birth_date = models.DateField(null=True)
     membership = models.CharField(default=MEMBERSHIP_BRONZE, max_length=1, choices=MEMBERSHIP_CHOICES)
-    created_at = models.DateTimeField(auto_now_add=True)
-    last_updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.first_name + " " + self.last_name
@@ -58,6 +58,7 @@ class Address(models.Model):
     def __str__(self):
         return self.customer.first_name + " " + self.city + " " + self.street
 
+# (id, placed_at, payment_status, customer_id)
 class Order(models.Model):
     PAYMENT_PENDING = 'P'
     PAYMENT_COMPLETED = 'C'
@@ -68,18 +69,19 @@ class Order(models.Model):
         (PAYMENT_FAILED, 'Failed')
     ]
     placed_at = models.DateTimeField(auto_now_add=True)
-    paymentstatus = models.CharField(max_length=1, choices=PAYMENT_CHOICES, default=PAYMENT_PENDING)
+    payment_status = models.CharField(max_length=1, choices=PAYMENT_CHOICES, default=PAYMENT_PENDING)
     customer = models.ForeignKey(Customer, on_delete=models.PROTECT)
 
     def __str__(self):
         return str(self.id)
     
 
+# (id, quantity, unit_price, order_id, product_id)
 class OrderItem(models.Model):
-    order = models.ForeignKey(Order, on_delete=models.PROTECT)
-    product = models.ForeignKey(Product, on_delete=models.PROTECT)
     quantity = models.IntegerField()
     unit_price = models.DecimalField(max_digits=10, decimal_places=2)
+    order  = models.ForeignKey(Order, on_delete=models.PROTECT)
+    product = models.ForeignKey(Product, on_delete=models.PROTECT)
 
     def __str__(self):
         return str(self.id)

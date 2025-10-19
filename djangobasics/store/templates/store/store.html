@@ -1,0 +1,48 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Store</title>
+    <link rel="stylesheet" href="{% static 'store/store.css' %}">
+</head>
+
+<body>
+    <h1>Store</h1>
+    <h2> {{querysets.title}} Count: {{count}}</h2>
+    <ul>
+        {% for qs in querysets %}
+        <li>
+            {{qs.title}} - {{qs.collection.title}}
+            {% comment %} {{qs}} {% endcomment %}
+        </li>
+        {% endfor %}
+    </ul> 
+    <!-- <table>
+
+        <head>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Collection</th>
+            </tr>
+        </head>
+
+        <body>
+            {% for product in products %}
+            <tr>
+                <td>{{ product.name }}</td>
+                <td>{{ product.description }}</td>
+                <td>{{ product.price }}</td>
+                <td>{{ product.collection.title }}</td>
+            </tr>
+            {% endfor %}
+        </body>
+    </table> -->
+</body>
+
+</html>
