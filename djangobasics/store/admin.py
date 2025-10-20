@@ -3,7 +3,7 @@ from .models import *
 # Register your models here.
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['title', 'unit_price']
+    list_display = ['title', 'unit_price', 'collection']
     list_editable = ['unit_price']
 # store app models
 admin.site.register(Customer)
