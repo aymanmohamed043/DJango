@@ -58,3 +58,34 @@
             font-size: 22px;
             color: #333;
         }
+
+        .student-card {
+            border: none;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: transform 0.2s ease-in-out;
+        }
+        .student-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
+        }
+        .student-img {
+            height: 220px;
+            object-fit: cover;
+            border-bottom: 1px solid #eee;
+        }
+        .student-info h5 {
+            font-weight: 600;
+            color: #212529;
+        }
+        .student-info p {
+            color: #6c757d;
+            margin-bottom: 4px;
+        }
+        .course-badge {
+            background-color: #0d6efd;
+            color: white;
+            font-size: 0.8rem;
+            margin: 2px;
+        }
