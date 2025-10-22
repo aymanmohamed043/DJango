@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Add New Student{% endblock title %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Add New Student</h2>
+
+    <form method="post" enctype="multipart/form-data" class="shadow p-4 rounded bg-light">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="text-center mt-3">
+            <button type="submit" class="btn btn-success">Save Student</button>
+            <a href="{% url 'students_list' %}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock content %}

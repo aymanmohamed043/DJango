@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}
+<h1 class="text-center mb-5">Students Page</h1>
+{% endblock title %}
+
+{% block content %}
+<div class="container py-5">
+
+    <!-- Create Student Button -->
+    <div class="d-flex justify-content-end mb-4">
+        <a href="{% url 'create_student' %}" class="btn btn-primary">+ Add Student</a>
+    </div>
+
+    <div class="row g-4">
+        {% for student in students %}
+        <div class="col-md-4 col-lg-3">
+            <div class="card student-card h-100">
+                <img src="{{ student.image.url }}" class="card-img-top student-img" alt="{{ student.name }}">
+
+                <div class="card-body student-info">
+                    <h5 class="card-title">{{ student.name }}</h5>
+                    <p><strong>Age:</strong> {{ student.age }}</p>
+                    <p><strong>Date of Birth:</strong> {{ student.date_of_birth }}</p>
+
+                    <div class="mt-3">
+                        <p class="fw-semibold">Courses:</p>
+                        {% for course in student.courses.all %}
+                        <span class="badge course-badge">{{ course.name }}</span>
+                        {% empty %}
+                        <p class="text-muted">No courses enrolled.</p>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Update & Delete buttons -->
+                <div class="card-footer text-center">
+                    <a href="{% url 'update_student' student.id %}" class="btn btn-warning btn-sm me-2">Edit</a>
+                    <a href="{% url 'delete_student' student.id %}" class="btn btn-danger btn-sm">Delete</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-center text-muted">No students found.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}
