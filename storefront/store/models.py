@@ -17,12 +17,12 @@ class Promotion(models.Model):
 # (id, title, description, unit_price, inventory, last_update, collection_id, slug)
 class Product(models.Model):
     title = models.CharField(max_length=255)
-    description = models.TextField()
+    description = models.TextField(null=True, blank=True)
     unit_price = models.DecimalField(max_digits=10, decimal_places=2)
-    inventory = models.IntegerField()
-    last_update = models.DateTimeField(auto_now=True)
+    inventory = models.IntegerField(null=True)
+    last_update = models.DateTimeField(auto_now=True, null=True)
     collection = models.ForeignKey(Collection, on_delete=models.CASCADE)
-    slug = models.SlugField()
+    slug = models.SlugField(null=True)
 
     def __str__(self):
         return self.title
