@@ -2,12 +2,18 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework.views import APIView    
 from rest_framework import status
+from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework_simplejwt.authentication import JWTAuthentication
 from .models import *
 from .serializer import *
 # Create your views here.
 
 
 class ProductAPIView(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated] 
+
+
     def get(self, request):
         products = Product.objects.all()
         serializer = ProductSerializer(products, many=True)
@@ -22,6 +28,10 @@ class ProductAPIView(APIView):
 
 
 class ProductAPIViewDetails(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated] 
+
+
     def get_object(self, pk):
         try:
             return Product.objects.get(pk=pk)
