@@ -21,6 +21,7 @@ from django.conf import settings
 urlpatterns = [
     path("admin/", admin.site.urls),
     path('sales/', include('sales.urls')),
+    path('lab2/', include('lab2.urls')),
 ]
 if "debug_toolbar" in settings.INSTALLED_APPS:
     import debug_toolbar
