@@ -1,6 +1,6 @@
 from celery import shared_task
 from django.db.models import Sum
-from .models import OrderDetail
+from sales.models import *
 
 @shared_task
 def generate_monthly_sales_report():
@@ -9,7 +9,7 @@ def generate_monthly_sales_report():
     time.sleep(10)
 
     data = (
-        OrderDetail.objects
+        OrderDetails.objects
         .values('order__order_date__month')
         .annotate(total=Sum('unit_price'))
         .order_by('order__order_date__month')

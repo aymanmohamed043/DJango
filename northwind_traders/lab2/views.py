@@ -56,7 +56,7 @@ def sales_report(request):
         .values('order_date__month')
         .annotate(total=Sum('orderdetail__unit_price'))
     )
-    return render(request, "reports/sales.html", {"sales": sales})
+    return render(request, "salesS/sales.html", {"sales": sales})
 
 ###########################################
 
